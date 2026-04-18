@@ -1,4 +1,4 @@
-import { Notification } from 'electron'
+import { Notification, BrowserWindow } from 'electron'
 import { getSchedules, getActiveScheduleId, getOrCreateDailyRecord, saveDailyRecord } from './store'
 
 let schedulerInterval: ReturnType<typeof setInterval> | null = null
@@ -33,6 +33,19 @@ function checkAndNotify(): void {
     if (currentMinutes === startMinutes && !notifiedBlocks.has(notifyKey)) {
       notifiedBlocks.add(notifyKey)
       sendBlockNotification(block.emoji, block.name, block.startTime, block.endTime, block.reminderText)
+
+      // 收工总结区块开始时，自动弹出复盘窗口
+      if (block.category === 'ritual' && block.id === 'wrap-up') {
+        const wins = BrowserWindow.getAllWindows()
+        const reviewWin = wins.find((w) => {
+          try { return w.webContents.getURL().includes('review') } catch { return false }
+        })
+        if (reviewWin) {
+          reviewWin.center()
+          reviewWin.show()
+          reviewWin.focus()
+        }
+      }
 
       // 找上一个区块，若未打卡则提示可以打卡
       const idx = schedule.blocks.indexOf(block)

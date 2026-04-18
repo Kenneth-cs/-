@@ -3,7 +3,7 @@ import MainPanel from './windows/MainPanel'
 import NoteWindow from './windows/NoteWindow'
 import ReviewWindow from './windows/ReviewWindow'
 
-export type MainView = 'main' | 'stats' | 'editor'
+export type MainView = 'main' | 'stats' | 'editor' | 'notes'
 
 // 根据 URL hash 决定渲染哪个独立窗口（note / review）
 // 主窗口内部通过 view state 切换 main / stats / editor
@@ -21,6 +21,14 @@ export default function App() {
     detect()
     window.addEventListener('hashchange', detect)
     return () => window.removeEventListener('hashchange', detect)
+  }, [])
+
+  // 监听主进程推送的 navigate 事件（如「从笔记窗口跳到历史笔记」）
+  useEffect(() => {
+    window.api.on('navigate', (view) => {
+      setMainView(view as MainView)
+    })
+    return () => window.api.off('navigate')
   }, [])
 
   if (windowType === 'note') return <NoteWindow />

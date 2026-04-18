@@ -46,11 +46,20 @@ const api = {
     resize: (height: number): void => ipcRenderer.send('window:resize', height),
     openNote: (): void => ipcRenderer.send('window:openNote'),
     openReview: (): void => ipcRenderer.send('window:openReview'),
+    openNotes: (): void => ipcRenderer.send('window:openNotes'),
   },
 
   // ── 调度器控制 ────────────────────────────────────────────────────────────
   scheduler: {
     reload: (): void => ipcRenderer.send('scheduler:reload')
+  },
+
+  // ── 主进程推送事件 ────────────────────────────────────────────────────────
+  on: (channel: 'navigate', cb: (view: string) => void): void => {
+    ipcRenderer.on(channel, (_event, view) => cb(view))
+  },
+  off: (channel: 'navigate'): void => {
+    ipcRenderer.removeAllListeners(channel)
   }
 }
 

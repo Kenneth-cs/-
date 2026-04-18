@@ -3,6 +3,7 @@ import type { Schedule, DailyRecord, TimeBlock } from '../../../main/types'
 import type { MainView } from '../App'
 import StatsPanel from './StatsPanel'
 import TemplateEditor from './TemplateEditor'
+import NotesHistory from './NotesHistory'
 
 // ─── 工具函数 ──────────────────────────────────────────────────────────────────
 
@@ -51,6 +52,7 @@ export default function MainPanel({
 }) {
   if (view === 'stats') return <StatsPanel onBack={() => onNavigate('main')} />
   if (view === 'editor') return <TemplateEditor onBack={() => onNavigate('main')} />
+  if (view === 'notes') return <NotesHistory onBack={() => onNavigate('main')} />
   return <MainPanelContent onNavigate={onNavigate} />
 }
 

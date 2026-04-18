@@ -54,8 +54,14 @@ export default function NoteWindow() {
       />
 
       {/* 底部操作 */}
-      <div className="flex items-center justify-end px-4 py-2.5 border-t border-outline-variant/30 bg-surface-container-low">
-        <span className="text-outline text-xs mr-3">Esc 取消</span>
+      <div className="flex items-center px-4 py-2.5 border-t border-outline-variant/30 bg-surface-container-low">
+        <button
+          onClick={() => window.api.window.openNotes()}
+          className="text-xs text-on-surface-variant hover:text-primary transition-colors"
+        >
+          📋 历史笔记
+        </button>
+        <span className="text-outline text-xs mx-3 ml-auto">Esc 取消</span>
         <button
           onClick={handleSave}
           disabled={!content.trim()}

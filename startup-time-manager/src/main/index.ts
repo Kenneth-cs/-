@@ -235,6 +235,15 @@ function registerWindowIpc(): void {
     reviewWindow.focus()
   })
 
+  // 从笔记窗口跳转到历史笔记（关闭笔记窗口，打开主面板并导航到历史笔记视图）
+  ipcMain.on('window:openNotes', () => {
+    noteWindow?.hide()
+    if (!mainWindow) return
+    showMainWindow()
+    // 通知渲染进程切换到历史笔记视图
+    mainWindow.webContents.send('navigate', 'notes')
+  })
+
   // 模板保存后热重载通知调度器
   ipcMain.on('scheduler:reload', () => {
     restartNotificationScheduler()
