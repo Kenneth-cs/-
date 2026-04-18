@@ -210,16 +210,16 @@ function MainPanelContent({ onNavigate }: { onNavigate: (v: MainView) => void })
 
             {/* 内容 + 规则 hint */}
             {(currentBlock.description || currentBlock.reminderText) && (
-              <div className="flex flex-col gap-0.5">
+              <div className="flex flex-col gap-1">
                 {currentBlock.description && (
-                  <div className="flex items-start gap-1.5">
-                    <span className="text-[10px] font-bold tracking-wider text-on-surface-variant uppercase mt-0.5 flex-shrink-0">做</span>
+                  <div className="flex items-start gap-2">
+                    <span className="text-[9px] font-bold tracking-wider text-on-surface-variant uppercase mt-0.5 flex-shrink-0">内容</span>
                     <span className="text-xs text-on-surface leading-relaxed">{currentBlock.description}</span>
                   </div>
                 )}
                 {currentBlock.reminderText && (
-                  <div className="flex items-start gap-1.5">
-                    <span className="text-[10px] font-bold tracking-wider text-outline uppercase mt-0.5 flex-shrink-0">则</span>
+                  <div className="flex items-start gap-2">
+                    <span className="text-[9px] font-bold tracking-wider text-outline uppercase mt-0.5 flex-shrink-0">规则</span>
                     <span className="text-xs text-on-surface-variant leading-relaxed">{currentBlock.reminderText}</span>
                   </div>
                 )}

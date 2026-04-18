@@ -44,10 +44,28 @@ export function getSchedules(): Schedule[] {
   const filePath = path.join(getDataDir(), 'schedules.json')
   const schedules = readJson<Schedule[]>(filePath, [])
   if (schedules.length === 0) {
-    // 首次启动写入默认数据
     writeJson(filePath, DEFAULT_SCHEDULES)
     return DEFAULT_SCHEDULES
   }
+  // 自动回填：老数据缺少 description / reminderText 时，从默认数据补全
+  let dirty = false
+  for (const schedule of schedules) {
+    const def = DEFAULT_SCHEDULES.find((d) => d.id === schedule.id)
+    if (!def) continue
+    for (const block of schedule.blocks) {
+      const defBlock = def.blocks.find((b) => b.id === block.id)
+      if (!defBlock) continue
+      if (!block.description && defBlock.description) {
+        block.description = defBlock.description
+        dirty = true
+      }
+      if (!block.reminderText && defBlock.reminderText) {
+        block.reminderText = defBlock.reminderText
+        dirty = true
+      }
+    }
+  }
+  if (dirty) writeJson(filePath, schedules)
   return schedules
 }
 
