@@ -280,27 +280,26 @@ function MainPanelContent({ onNavigate }: { onNavigate: (v: MainView) => void })
           const isCurrent = currentBlock?.id === block.id
           const isDone = checkin?.completed ?? false
 
-          // ── 共用：hover 展开的详情行 ──
-          const hasDetail = block.description || block.reminderText
-          const DetailRow = () =>
-            hasDetail ? (
-              <div className="overflow-hidden max-h-0 group-hover:max-h-16 transition-all duration-200 ease-out pl-8">
-                <div className="pb-2 flex flex-col gap-0.5">
-                  {block.description && (
-                    <div className="flex items-start gap-1.5">
-                      <span className="text-[9px] font-bold tracking-wider text-on-surface-variant uppercase mt-0.5 flex-shrink-0 w-3">做</span>
-                      <span className="text-[11px] text-on-surface-variant leading-relaxed">{block.description}</span>
-                    </div>
-                  )}
-                  {block.reminderText && (
-                    <div className="flex items-start gap-1.5">
-                      <span className="text-[9px] font-bold tracking-wider text-outline uppercase mt-0.5 flex-shrink-0 w-3">则</span>
-                      <span className="text-[11px] text-outline leading-relaxed">{block.reminderText}</span>
-                    </div>
-                  )}
-                </div>
+          // ── 共用：hover 展开的详情行（内联 JSX，避免组件嵌套导致 group-hover 失效） ──
+          const hasDetail = !!(block.description || block.reminderText)
+          const detailSection = hasDetail ? (
+            <div className="overflow-hidden max-h-0 group-hover:max-h-24 transition-all duration-200 ease-out px-3 pl-10">
+              <div className="pb-2.5 pt-0 flex flex-col gap-1">
+                {block.description && (
+                  <div className="flex items-start gap-2">
+                    <span className="text-[9px] font-bold tracking-wider text-on-surface-variant uppercase mt-0.5 flex-shrink-0">内容</span>
+                    <span className="text-[11px] text-on-surface leading-relaxed">{block.description}</span>
+                  </div>
+                )}
+                {block.reminderText && (
+                  <div className="flex items-start gap-2">
+                    <span className="text-[9px] font-bold tracking-wider text-outline uppercase mt-0.5 flex-shrink-0">规则</span>
+                    <span className="text-[11px] text-outline leading-relaxed">{block.reminderText}</span>
+                  </div>
+                )}
               </div>
-            ) : null
+            </div>
+          ) : null
 
           // ── 进行中 ──
           if (isCurrent) {
@@ -330,7 +329,7 @@ function MainPanelContent({ onNavigate }: { onNavigate: (v: MainView) => void })
                     {block.startTime} - {block.endTime}
                   </span>
                 </div>
-                <DetailRow />
+                {detailSection}
               </div>
             )
           }
@@ -359,7 +358,7 @@ function MainPanelContent({ onNavigate }: { onNavigate: (v: MainView) => void })
                     {block.startTime} - {block.endTime}
                   </span>
                 </div>
-                <DetailRow />
+                {detailSection}
               </div>
             )
           }
@@ -387,7 +386,7 @@ function MainPanelContent({ onNavigate }: { onNavigate: (v: MainView) => void })
                   {block.startTime} - {block.endTime}
                 </span>
               </div>
-              <DetailRow />
+              {detailSection}
             </div>
           )
         })}
