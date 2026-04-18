@@ -15,7 +15,8 @@ export interface TimeBlock {
   startTime: string      // "10:45"  HH:mm
   endTime: string        // "13:00"  HH:mm
   category: BlockCategory
-  reminderText?: string  // 通知提示语
+  description?: string   // 这个时段做什么（内容）
+  reminderText?: string  // 执行规则（通知提示语）
 }
 
 // ─── 时间表模板 ────────────────────────────────────────────────────────────────

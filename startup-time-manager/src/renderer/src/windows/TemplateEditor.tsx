@@ -24,6 +24,7 @@ function emptyBlock(): TimeBlock {
     startTime: '09:00',
     endTime: '10:00',
     category: 'deep',
+    description: '',
     reminderText: ''
   }
 }
@@ -232,12 +233,24 @@ export default function TemplateEditor({ onBack }: { onBack: () => void }) {
                     <option key={val} value={val}>{label}</option>
                   ))}
                 </select>
-                <input
-                  value={editForm.reminderText ?? ''}
-                  onChange={(e) => setEditForm({ ...editForm, reminderText: e.target.value })}
-                  placeholder="通知提示语（可选）"
-                  className="bg-surface-container rounded px-2 py-1 text-xs outline-none border border-outline-variant/30"
-                />
+                <div className="flex flex-col gap-1">
+                  <label className="text-[10px] font-bold tracking-wider text-on-surface-variant uppercase">内容（这个时段做什么）</label>
+                  <input
+                    value={editForm.description ?? ''}
+                    onChange={(e) => setEditForm({ ...editForm, description: e.target.value })}
+                    placeholder="例：写代码 / 产品开发"
+                    className="bg-surface-container rounded px-2 py-1 text-xs outline-none border border-outline-variant/30"
+                  />
+                </div>
+                <div className="flex flex-col gap-1">
+                  <label className="text-[10px] font-bold tracking-wider text-on-surface-variant uppercase">规则（执行约束 / 通知提示）</label>
+                  <input
+                    value={editForm.reminderText ?? ''}
+                    onChange={(e) => setEditForm({ ...editForm, reminderText: e.target.value })}
+                    placeholder="例：手机静音、微信关闭"
+                    className="bg-surface-container rounded px-2 py-1 text-xs outline-none border border-outline-variant/30"
+                  />
+                </div>
                 <div className="flex justify-end gap-2">
                   <button
                     onClick={() => { setEditingId(null); setEditForm(null) }}

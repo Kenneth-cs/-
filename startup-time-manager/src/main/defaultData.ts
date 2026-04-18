@@ -12,7 +12,8 @@ export const DEFAULT_SCHEDULES: Schedule[] = [
         startTime: '10:00',
         endTime: '10:30',
         category: 'ritual',
-        reminderText: '不碰手机，先动起来！'
+        description: '起床 + 运动（跳绳 / 拉伸 / 快走都行）',
+        reminderText: '不碰手机，不看消息'
       },
       {
         id: 'daily-anchor',
@@ -21,7 +22,8 @@ export const DEFAULT_SCHEDULES: Schedule[] = [
         startTime: '10:30',
         endTime: '10:45',
         category: 'ritual',
-        reminderText: '今天最重要的 3 件事是什么？'
+        description: '写下今天最重要的 1–3 件事',
+        reminderText: '一杯咖啡 + 纸笔或简单笔记'
       },
       {
         id: 'deep-work-1',
@@ -30,7 +32,8 @@ export const DEFAULT_SCHEDULES: Schedule[] = [
         startTime: '10:45',
         endTime: '13:00',
         category: 'deep',
-        reminderText: '手机静音，全屏编辑器'
+        description: '写代码 / 产品开发',
+        reminderText: '手机静音、微信关闭、全屏编辑器'
       },
       {
         id: 'lunch-break',
@@ -39,7 +42,8 @@ export const DEFAULT_SCHEDULES: Schedule[] = [
         startTime: '13:00',
         endTime: '14:00',
         category: 'break',
-        reminderText: '吃饭休息，可以看消息了'
+        description: '吃饭 + 回消息 + 自由时间',
+        reminderText: '第一个消息窗口，可以看消息了'
       },
       {
         id: 'deep-work-2',
@@ -48,7 +52,8 @@ export const DEFAULT_SCHEDULES: Schedule[] = [
         startTime: '14:00',
         endTime: '16:30',
         category: 'deep',
-        reminderText: '手机静音，全屏编辑器'
+        description: '写代码 / 产品开发',
+        reminderText: '严格无干扰，同上'
       },
       {
         id: 'shallow-work',
@@ -57,7 +62,8 @@ export const DEFAULT_SCHEDULES: Schedule[] = [
         startTime: '16:30',
         endTime: '17:30',
         category: 'shallow',
-        reminderText: '集中处理消息和杂务'
+        description: '回消息、商务沟通、行政杂务、邮件',
+        reminderText: '第二个消息窗口，集中处理'
       },
       {
         id: 'wrap-up',
@@ -66,7 +72,8 @@ export const DEFAULT_SCHEDULES: Schedule[] = [
         startTime: '17:30',
         endTime: '18:00',
         category: 'ritual',
-        reminderText: '记录今天完成了什么'
+        description: '记录今天完成了什么、明天先做什么',
+        reminderText: '给明天的自己留路标'
       },
       {
         id: 'exercise',
@@ -75,7 +82,8 @@ export const DEFAULT_SCHEDULES: Schedule[] = [
         startTime: '18:00',
         endTime: '19:00',
         category: 'exercise',
-        reminderText: '去运动，今天辛苦了！'
+        description: '运动',
+        reminderText: '运动 = 打卡下班，心理边界'
       },
       {
         id: 'dinner',
@@ -84,7 +92,8 @@ export const DEFAULT_SCHEDULES: Schedule[] = [
         startTime: '19:00',
         endTime: '20:00',
         category: 'break',
-        reminderText: '好好吃饭'
+        description: '吃饭、休息',
+        reminderText: '放松'
       },
       {
         id: 'flexible',
@@ -93,6 +102,7 @@ export const DEFAULT_SCHEDULES: Schedule[] = [
         startTime: '20:00',
         endTime: '21:30',
         category: 'flexible',
+        description: '学习 / 策略思考 / 轻量工作',
         reminderText: '可选，不是义务'
       },
       {
@@ -102,7 +112,8 @@ export const DEFAULT_SCHEDULES: Schedule[] = [
         startTime: '21:30',
         endTime: '22:00',
         category: 'ritual',
-        reminderText: '不碰电脑，准备休息'
+        description: '放松、阅读、准备睡觉',
+        reminderText: '不碰电脑、不看工作消息'
       }
     ]
   }

@@ -208,6 +208,24 @@ function MainPanelContent({ onNavigate }: { onNavigate: (v: MainView) => void })
               </h1>
             </div>
 
+            {/* 内容 + 规则 hint */}
+            {(currentBlock.description || currentBlock.reminderText) && (
+              <div className="flex flex-col gap-0.5">
+                {currentBlock.description && (
+                  <div className="flex items-start gap-1.5">
+                    <span className="text-[10px] font-bold tracking-wider text-on-surface-variant uppercase mt-0.5 flex-shrink-0">做</span>
+                    <span className="text-xs text-on-surface leading-relaxed">{currentBlock.description}</span>
+                  </div>
+                )}
+                {currentBlock.reminderText && (
+                  <div className="flex items-start gap-1.5">
+                    <span className="text-[10px] font-bold tracking-wider text-outline uppercase mt-0.5 flex-shrink-0">则</span>
+                    <span className="text-xs text-on-surface-variant leading-relaxed">{currentBlock.reminderText}</span>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* 进度条 */}
             <div className="flex flex-col gap-1.5">
               <div className="flex justify-between items-end">
@@ -262,33 +280,57 @@ function MainPanelContent({ onNavigate }: { onNavigate: (v: MainView) => void })
           const isCurrent = currentBlock?.id === block.id
           const isDone = checkin?.completed ?? false
 
+          // ── 共用：hover 展开的详情行 ──
+          const hasDetail = block.description || block.reminderText
+          const DetailRow = () =>
+            hasDetail ? (
+              <div className="overflow-hidden max-h-0 group-hover:max-h-16 transition-all duration-200 ease-out pl-8">
+                <div className="pb-2 flex flex-col gap-0.5">
+                  {block.description && (
+                    <div className="flex items-start gap-1.5">
+                      <span className="text-[9px] font-bold tracking-wider text-on-surface-variant uppercase mt-0.5 flex-shrink-0 w-3">做</span>
+                      <span className="text-[11px] text-on-surface-variant leading-relaxed">{block.description}</span>
+                    </div>
+                  )}
+                  {block.reminderText && (
+                    <div className="flex items-start gap-1.5">
+                      <span className="text-[9px] font-bold tracking-wider text-outline uppercase mt-0.5 flex-shrink-0 w-3">则</span>
+                      <span className="text-[11px] text-outline leading-relaxed">{block.reminderText}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : null
+
           // ── 进行中 ──
           if (isCurrent) {
             return (
               <div
                 key={block.id}
-                className="flex items-center justify-between p-3 rounded-lg bg-surface-container-lowest border border-outline-variant/20 relative overflow-hidden group"
+                className="rounded-lg bg-surface-container-lowest border border-outline-variant/20 relative overflow-hidden group"
                 style={{ boxShadow: '0 4px 12px rgba(26,28,29,0.06)' }}
               >
-                {/* 左侧红色竖条 */}
                 <div className="absolute left-0 top-0 bottom-0 w-1 bg-secondary rounded-l-lg" />
-                <div className="flex items-center gap-3 pl-2">
-                  <button
-                    onClick={() => handleCheckin(block.id)}
-                    className="w-5 h-5 flex items-center justify-center rounded-full bg-secondary-container text-on-secondary flex-shrink-0"
-                    title="打卡完成"
-                  >
-                    <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </button>
-                  <span className="text-sm font-bold text-on-surface">
-                    {block.emoji} {block.name}
+                <div className="flex items-center justify-between p-3">
+                  <div className="flex items-center gap-3 pl-2">
+                    <button
+                      onClick={() => handleCheckin(block.id)}
+                      className="w-5 h-5 flex items-center justify-center rounded-full bg-secondary-container text-on-secondary flex-shrink-0"
+                      title="打卡完成"
+                    >
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </button>
+                    <span className="text-sm font-bold text-on-surface">
+                      {block.emoji} {block.name}
+                    </span>
+                  </div>
+                  <span className="text-xs font-medium text-secondary flex-shrink-0 ml-2">
+                    {block.startTime} - {block.endTime}
                   </span>
                 </div>
-                <span className="text-xs font-medium text-secondary flex-shrink-0 ml-2">
-                  {block.startTime} - {block.endTime}
-                </span>
+                <DetailRow />
               </div>
             )
           }
@@ -298,23 +340,26 @@ function MainPanelContent({ onNavigate }: { onNavigate: (v: MainView) => void })
             return (
               <div
                 key={block.id}
-                className="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-low transition-colors group cursor-default"
+                className="rounded-lg hover:bg-surface-container-low transition-colors group cursor-default"
               >
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => handleCheckin(block.id)}
-                    className="flex-shrink-0 text-primary text-xl leading-none"
-                    title="取消打卡"
-                  >
-                    ✅
-                  </button>
-                  <span className="text-sm font-medium text-on-surface-variant line-through opacity-60">
-                    {block.emoji} {block.name}
+                <div className="flex items-center justify-between p-3">
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => handleCheckin(block.id)}
+                      className="flex-shrink-0 text-primary text-xl leading-none"
+                      title="取消打卡"
+                    >
+                      ✅
+                    </button>
+                    <span className="text-sm font-medium text-on-surface-variant line-through opacity-60">
+                      {block.emoji} {block.name}
+                    </span>
+                  </div>
+                  <span className="text-xs text-outline group-hover:text-on-surface-variant transition-colors flex-shrink-0 ml-2">
+                    {block.startTime} - {block.endTime}
                   </span>
                 </div>
-                <span className="text-xs text-outline group-hover:text-on-surface-variant transition-colors flex-shrink-0 ml-2">
-                  {block.startTime} - {block.endTime}
-                </span>
+                <DetailRow />
               </div>
             )
           }
@@ -323,23 +368,26 @@ function MainPanelContent({ onNavigate }: { onNavigate: (v: MainView) => void })
           return (
             <div
               key={block.id}
-              className="flex items-center justify-between p-3 rounded-lg hover:bg-surface-container-low transition-colors group"
+              className="rounded-lg hover:bg-surface-container-low transition-colors group"
             >
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => handleCheckin(block.id)}
-                  className="flex-shrink-0 text-outline text-xl leading-none hover:text-primary transition-colors"
-                  title="打卡"
-                >
-                  ☐
-                </button>
-                <span className="text-sm font-medium text-on-surface">
-                  {block.emoji} {block.name}
+              <div className="flex items-center justify-between p-3">
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={() => handleCheckin(block.id)}
+                    className="flex-shrink-0 text-outline text-xl leading-none hover:text-primary transition-colors"
+                    title="打卡"
+                  >
+                    ☐
+                  </button>
+                  <span className="text-sm font-medium text-on-surface">
+                    {block.emoji} {block.name}
+                  </span>
+                </div>
+                <span className="text-xs text-outline group-hover:text-on-surface-variant transition-colors flex-shrink-0 ml-2">
+                  {block.startTime} - {block.endTime}
                 </span>
               </div>
-              <span className="text-xs text-outline group-hover:text-on-surface-variant transition-colors flex-shrink-0 ml-2">
-                {block.startTime} - {block.endTime}
-              </span>
+              <DetailRow />
             </div>
           )
         })}
