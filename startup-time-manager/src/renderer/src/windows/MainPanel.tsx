@@ -212,15 +212,15 @@ function MainPanelContent({ onNavigate }: { onNavigate: (v: MainView) => void })
             {(currentBlock.description || currentBlock.reminderText) && (
               <div className="flex flex-col gap-1">
                 {currentBlock.description && (
-                  <div className="flex items-start gap-2">
-                    <span className="text-[9px] font-bold tracking-wider text-on-surface-variant uppercase mt-0.5 flex-shrink-0">内容</span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xs font-semibold text-on-surface-variant flex-shrink-0">内容</span>
                     <span className="text-xs text-on-surface leading-relaxed">{currentBlock.description}</span>
                   </div>
                 )}
                 {currentBlock.reminderText && (
-                  <div className="flex items-start gap-2">
-                    <span className="text-[9px] font-bold tracking-wider text-outline uppercase mt-0.5 flex-shrink-0">规则</span>
-                    <span className="text-xs text-on-surface-variant leading-relaxed">{currentBlock.reminderText}</span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xs font-semibold text-outline flex-shrink-0">规则</span>
+                    <span className="text-xs text-outline leading-relaxed">{currentBlock.reminderText}</span>
                   </div>
                 )}
               </div>
@@ -286,15 +286,15 @@ function MainPanelContent({ onNavigate }: { onNavigate: (v: MainView) => void })
             <div className="overflow-hidden max-h-0 group-hover:max-h-24 transition-all duration-200 ease-out px-3 pl-10">
               <div className="pb-2.5 pt-0 flex flex-col gap-1">
                 {block.description && (
-                  <div className="flex items-start gap-2">
-                    <span className="text-[9px] font-bold tracking-wider text-on-surface-variant uppercase mt-0.5 flex-shrink-0">内容</span>
-                    <span className="text-[11px] text-on-surface leading-relaxed">{block.description}</span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xs font-semibold text-on-surface-variant flex-shrink-0">内容</span>
+                    <span className="text-xs text-on-surface leading-relaxed">{block.description}</span>
                   </div>
                 )}
                 {block.reminderText && (
-                  <div className="flex items-start gap-2">
-                    <span className="text-[9px] font-bold tracking-wider text-outline uppercase mt-0.5 flex-shrink-0">规则</span>
-                    <span className="text-[11px] text-outline leading-relaxed">{block.reminderText}</span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-xs font-semibold text-outline flex-shrink-0">规则</span>
+                    <span className="text-xs text-outline leading-relaxed">{block.reminderText}</span>
                   </div>
                 )}
               </div>
